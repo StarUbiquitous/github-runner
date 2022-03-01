@@ -16,7 +16,7 @@ RUN apt-get update \
 USER root
 WORKDIR /root/
 
-RUN GITHUB_RUNNER_VERSION="2.278.1" \
+RUN GITHUB_RUNNER_VERSION="2.278.0" \
     && curl -Ls https://internal.knat.network/action-runner/actions-runner-linux-x64-${GITHUB_RUNNER_VERSION}.tar.gz | tar xz \
     && ./bin/installdependencies.sh
 
