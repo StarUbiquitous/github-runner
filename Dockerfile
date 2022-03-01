@@ -15,6 +15,8 @@ RUN apt-get update \
 
 RUN useradd -m github && \
     usermod -aG sudo github && \
+    groupadd docker && \
+    gpasswd -a github docker && \
     echo "%sudo ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers
 
 USER github
