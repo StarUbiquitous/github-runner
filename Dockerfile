@@ -19,7 +19,7 @@ WORKDIR /root/
 RUN curl -Ls https://github.com/actions/runner/releases/download/v2.287.1/actions-runner-linux-x64-2.287.1.tar.gz | tar xz \
     && sudo ./bin/installdependencies.sh
 
-COPY --chown=github:github entrypoint.sh ./entrypoint.sh
+COPY entrypoint.sh ./entrypoint.sh
 RUN sudo chmod u+x ./entrypoint.sh
 
-ENTRYPOINT ["/home/github/entrypoint.sh"]
+ENTRYPOINT ["./entrypoint.sh"]
