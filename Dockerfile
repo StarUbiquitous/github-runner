@@ -1,5 +1,4 @@
 FROM ubuntu:18.04
-ARG RUNNER_VERSION="2.278.1"
 
 ENV GITHUB_PAT ""
 ENV GITHUB_ORG_NAME ""  
@@ -18,9 +17,9 @@ RUN useradd -m github && \
 USER github
 WORKDIR /home/github
 
-RUN curl -O -L https://github.com/actions/runner/releases/download/v$RUNNER_VERSION/actions-runner-linux-x64-$RUNNER_VERSION.tar.gz
-RUN tar xzf ./actions-runner-linux-x64-$RUNNER_VERSION.tar.gz
-RUN sudo ./bin/installdependencies.sh
+RUN RUNNER_VERSION="2.278.1" \
+    && curl -Ls https://github.com/actions/runner/releases/download/v$RUNNER_VERSION/actions-runner-linux-x64-$RUNNER_VERSION.tar.gz | tar xz \
+    && sudo ./bin/installdependencies.sh
 
 COPY --chown=github:github entrypoint.sh ./entrypoint.sh
 RUN sudo chmod u+x ./entrypoint.sh
