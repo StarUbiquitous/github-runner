@@ -9,7 +9,7 @@ RUN apt-get update \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/* \
     && curl https://download.docker.com/linux/static/stable/x86_64/docker-19.3.9.tgz --output docker-19.3.9.tgz \
-    && tar xvfz docker-20.10.7.tgz \
+    && tar xvfz docker-19.3.9.tgz \
     && cp docker/* /usr/bin/ 
 
 
