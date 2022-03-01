@@ -37,23 +37,12 @@ jobs:
         with:
           string: ${{ github.repository }}
 
-      - name: tencentyun meta
+      - name: docker meta
         id: meta
         uses: docker/metadata-action@v3
         with:
           images: |
             ccr.ccs.tencentyun.com/${{ steps.reponame.outputs.lowercase }}
-          tags: |
-            type=schedule
-            type=ref,event=branch
-            type=semver,pattern={{version}}
-            type=semver,pattern={{major}}.{{minor}}
-      
-      - name: Docker meta
-        id: meta
-        uses: docker/metadata-action@v3
-        with:
-          images: |
             starubiquitous/github-runner
           tags: |
             type=schedule
