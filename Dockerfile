@@ -17,6 +17,8 @@ USER root
 WORKDIR /root/
 
 RUN curl -Ls https://github.com/actions/runner/releases/download/v2.287.1/actions-runner-linux-x64-2.287.1.tar.gz | tar xz \
+    sed -i '3,9d' ./config.sh && \
+    sed -i '3,8d' ./run.sh \
     && sudo ./bin/installdependencies.sh
 
 COPY entrypoint.sh ./entrypoint.sh
