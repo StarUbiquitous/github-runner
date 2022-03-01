@@ -1,26 +1,28 @@
 FROM ubuntu:18.04
+ARG RUNNER_VERSION="2.278.1"
 
 ENV GITHUB_PAT ""
-ENV GITHUB_ORG_NAME ""
-ENV RUNNER_WORKDIR "_work"
-ENV RUNNER_LABELS ""
+ENV GITHUB_ORG_NAME ""  
+
 
 RUN apt-get update \
-    && apt-get install -y curl sudo git jq iputils-ping zip \
+    && apt-get install -y curl sudo git jq tar gnupg2 iputils-ping  \
     && apt-get clean \
-    && rm -rf /var/lib/apt/lists/* \
-    && curl https://download.docker.com/linux/static/stable/x86_64/docker-20.10.7.tgz --output docker-20.10.7.tgz \
-    && tar xvfz docker-20.10.7.tgz \
-    && cp docker/* /usr/bin/
+    && rm -rf /var/lib/apt/lists/*
 
-USER root
-WORKDIR /root/
 
-RUN GITHUB_RUNNER_VERSION="2.278.0" \
-    && curl -Ls https://internal.knat.network/action-runner/actions-runner-linux-x64-${GITHUB_RUNNER_VERSION}.tar.gz | tar xz \
-    && ./bin/installdependencies.sh
+RUN useradd -m github && \
+    usermod -aG sudo github && \
+    echo "%sudo ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers
 
-COPY entrypoint.sh runsvc.sh ./
-RUN sudo chmod u+x ./entrypoint.sh ./runsvc.sh
+USER github
+WORKDIR /home/github
 
-ENTRYPOINT ["./entrypoint.sh"]
+RUN curl -O -L https://github.com/actions/runner/releases/download/v$RUNNER_VERSION/actions-runner-linux-x64-$RUNNER_VERSION.tar.gz
+RUN tar xzf ./actions-runner-linux-x64-$RUNNER_VERSION.tar.gz
+RUN sudo ./bin/installdependencies.sh
+
+COPY --chown=github:github entrypoint.sh ./entrypoint.sh
+RUN sudo chmod u+x ./entrypoint.sh
+
+ENTRYPOINT ["/home/github/entrypoint.sh"]
