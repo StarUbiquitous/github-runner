@@ -5,7 +5,7 @@ token_url="https://api.github.com/orgs/${GITHUB_ORG_NAME}/actions/runners/regist
 payload=$(curl -sX POST -H "Authorization: token ${GITHUB_PAT}" ${token_url})
 export RUNNER_TOKEN=$(echo $payload | jq .token --raw-output)
 
-./config.sh --url https://github.com/${GITHUB_OWNER} --token ${RUNNER_TOKEN}
+./config.sh --unattended --url https://github.com/${GITHUB_ORG_NAME} --token ${RUNNER_TOKEN}
 
 remove() {
    ./config.sh remove --unattended --token "${RUNNER_TOKEN}"
