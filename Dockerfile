@@ -18,7 +18,7 @@ USER github
 WORKDIR /home/github
 
 RUN RUNNER_VERSION="2.278.1" \
-    && curl -Ls https://github.com/actions/runner/releases/download/v$RUNNER_VERSION/actions-runner-linux-x64-$RUNNER_VERSION.tar.gz | tar xvf \
+    && curl -Ls https://github.com/actions/runner/releases/download/v$RUNNER_VERSION/actions-runner-linux-x64-$RUNNER_VERSION.tar.gz | tar xv \
     && sudo ./bin/installdependencies.sh
 
 COPY --chown=github:github entrypoint.sh ./entrypoint.sh
