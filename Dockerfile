@@ -13,14 +13,8 @@ RUN apt-get update \
     && cp docker/* /usr/bin/ 
 
 
-RUN useradd -m github && \
-    usermod -aG sudo github && \
-    groupadd docker && \
-    gpasswd -a github docker && \
-    echo "%sudo ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers
-
-USER github
-WORKDIR /home/github
+USER root
+WORKDIR /root/
 
 RUN curl -Ls https://github.com/actions/runner/releases/download/v2.287.1/actions-runner-linux-x64-2.287.1.tar.gz | tar xz \
     && sudo ./bin/installdependencies.sh
