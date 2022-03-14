@@ -1,4 +1,4 @@
-FROM ubuntu:20.04
+FROM ubuntu:latest
 
 ENV GITHUB_PAT ""
 ENV GITHUB_ORG_NAME ""  
