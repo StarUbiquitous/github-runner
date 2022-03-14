@@ -22,7 +22,7 @@ RUN useradd -m github && \
 USER github
 WORKDIR /home/github
 
-RUN curl -Ls https://github.com/actions/runner/releases/download/v2.288.1/actions-runner-linux-x64-2.288.1.tar.gz | tar xz \
+RUN curl -oLs https://github.com/actions/runner/releases/download/v2.288.1/actions-runner-linux-x64-2.288.1.tar.gz | tar xz \
     && sudo ./bin/installdependencies.sh
 
 COPY --chown=github:github entrypoint.sh ./entrypoint.sh
