@@ -10,7 +10,9 @@ RUN apt-get update \
     && rm -rf /var/lib/apt/lists/* \
     && curl https://download.docker.com/linux/static/stable/x86_64/docker-20.10.13.tgz --output docker-20.10.13.tgz \
     && tar xvfz docker-20.10.13.tgz \
-    && cp docker/* /usr/bin/ 
+    && cp docker/* /usr/bin/ \
+    && curl -L https://storage.googleapis.com/kubernetes-release/release/v1.22.5/bin/linux/amd64/kubectl -o /usr/local/bin/kubectl \
+    && chmod +x /usr/local/bin/kubectl
 
 
 RUN useradd -m github && \
