@@ -3,9 +3,11 @@ FROM ubuntu:18.04
 ENV GITHUB_PAT ""
 ENV GITHUB_ORG_NAME ""  
 
+RUN curl -fsSL https://cli.github.com/packages/githubcli-archive-keyring.gpg | sudo dd of=/usr/share/keyrings/githubcli-archive-keyring.gpg \
+    && echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main" | sudo tee /etc/apt/sources.list.d/github-cli.list > /dev/null
 
 RUN apt-get update \
-    && apt-get install -y curl sudo git jq tar gnupg2 iputils-ping  \
+    && apt-get install -y curl sudo git jq tar gnupg2 iputils-ping gh \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/* \
     && curl https://download.docker.com/linux/static/stable/x86_64/docker-20.10.13.tgz --output docker-20.10.13.tgz \
